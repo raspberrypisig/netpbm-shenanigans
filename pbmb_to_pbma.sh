@@ -16,6 +16,7 @@ fi
 rm pbmb_to_pbma.o
 #
 chmod ugo+x a.out
+mv a.out pbmb_to_pbma
 #mv a.out ~/bincpp/pbmb_to_pbma
 #
-echo "Executable installed as ~/bincpp/pbmb_to_pbma"
+#echo "Executable installed as ~/bincpp/pbmb_to_pbma"
