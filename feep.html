@@ -15,19 +15,47 @@
               console.log(reader.result);
               rawbuffer = new Uint8Array(reader.result);
               console.log(rawbuffer);
+              /*
               for (let i = 8; i < pbmfile.size ; i++) {
                 console.log(rawbuffer[i]);
               }
+              */
+              const width1 = rawbuffer[3];
+              const width2 = rawbuffer[4];
+              let width;
+              if (width2 == 0x10) {
+
+              }
+
+              else {
+                width = 10 * (width1 - 0x30) + (width2 - 0x30);
+              }
+
+              console.log("width:", width);
+              let column = 0; 
+              let row = 0;
 
               console.log("------------start of real data-----------------------------");
               for (let i = 8; i < pbmfile.size ; i++) {
                 for (let j=7; j>=0; j--) {
                   let val = rawbuffer[i] & (1 << j);
                   if (val) {
-                  	console.log("1 ");
+                  	console.log("1 at (",row,",",column,")");
+                    //canvas->setPixel(row,column,1);
                   }
-                  else
-                  	console.log("0 ");
+                  
+                  else {
+                  	console.log("0 at (",row,",",column,")");
+                    //canvas->setPixel(row,column,0);
+                  }
+
+                  column = column + 1;
+                  if (column === width) {
+                    row = row + 1;
+                    column = 0;
+                  }
+
+
                 }
 
               }              
