@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>PBM fun</title>
+	<script>
+        function handleFiles() {
+           const fileList = this.files; /* now you can work with the file list */
+           const pbmfile = fileList[0];
+           console.log(pbmfile.name);
+           console.log(pbmfile.size);
+           const reader = new FileReader();
+           reader.addEventListener('loadend', () => {
+              console.log(reader.result);
+              rawbuffer = new Uint8Array(reader.result);
+              console.log(rawbuffer);
+              for (let i = 8; i < pbmfile.size ; i++) {
+                console.log(rawbuffer[i]);
+              }
+
+              console.log("------------start of real data-----------------------------");
+              for (let i = 8; i < pbmfile.size ; i++) {
+                for (let j=7; j>=0; j--) {
+                  let val = rawbuffer[i] & (1 << j);
+                  if (val) {
+                  	console.log("1 ");
+                  }
+                  else
+                  	console.log("0 ");
+                }
+
+              }              
+
+           });
+           reader.readAsArrayBuffer(pbmfile);
+
+
+
+        }
+
+		document.addEventListener("DOMContentLoaded", function(event) {
+           const inputElement = document.getElementById("input");
+           inputElement.addEventListener("change", handleFiles, false);
+
+
+		});
+
+	</script>
+</head>
+<body>
+Please upload a binary PBM file 
+
+<input type="file" id="input">
+
+</body>
+</html>
